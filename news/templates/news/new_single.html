@@ -1,0 +1,13 @@
+{% extends 'homepage/__stoc.html' %}
+
+{% block content%}
+<br>
+<br>
+<br>
+<div class="jumbotron">
+    <h1>{{ new.title }}</h1>
+    <p class="lead">{{ new.body }}<br>{{ new.date }}</p>
+    <a class="btn btn-lg btn-primary" href="/news" role="button">Вернуться к списку новостей</a>
+</div>
+{% endblock %}
+

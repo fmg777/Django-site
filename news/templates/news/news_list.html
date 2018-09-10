@@ -1,0 +1,14 @@
+{% extends 'homepage/__stoc.html' %}
+
+{% block content%}
+<br>
+<br>
+<br>
+{% for new in news %}
+<div class="jumbotron">
+        <h1>{{ new.title }}</h1>
+        <p class="lead">{{ new.date}}</p>
+        <a class="btn btn-lg btn-primary" href="{% url 'new_single' pk=new.id  %}" role="button">Перейти к статье</a>
+</div>
+{% endfor %}
+{% endblock %}
