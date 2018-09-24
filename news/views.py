@@ -1,16 +1,32 @@
-from django.shortcuts import render,get_object_or_404
-from .models import Novosti
+from django.shortcuts import render,get_object_or_404,redirect
+from .models import Novosti,Comment
+from django.core.paginator import Paginator
+from .forms import CommentForm
 
-
-# Create your views here.
 """All news"""
+
 def news_list (request):
-    news = Novosti.objects.all()
-    return render(request,'news/news_list.html',{"news": news})
+    contact_list = Novosti.objects.all()
+    paginator = Paginator(contact_list, 2)
 
+    page = request.GET.get('page')
+    contacts = paginator.get_page(page)
+    if page == '1':
+        return redirect('list_news', permanent=True)
+    return render(request, 'news/news_list.html', {'contacts': contacts})
 
-
-"""check 1 new"""
+""" 1 new   """
 def new_single (request, pk):
     new = get_object_or_404(Novosti, id=pk)
-    return render(request, 'news/new_single.html',{"new": new})
+    comment = Comment.objects.filter(pk=new)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user = request.user
+            form.new = new
+            form.save()
+            return redirect('new_single', pk)
+    else:
+        form = CommentForm()
+    return render(request, 'news/new_single.html', {"form": form, "comments": comment, "new": new})

@@ -6,8 +6,26 @@
 <br>
 <div class="jumbotron">
     <h1>{{ new.title }}</h1>
-    <p class="lead">{{ new.body }}<br>{{ new.date }}</p>
-    <a class="btn btn-lg btn-primary" href="/news" role="button">Вернуться к списку новостей</a>
-</div>
+    <p class="lead">{{ new.body }}<br><br>{{ new.date }}</p>
+    <a class="btn btn-lg btn-primary" href="/news" role="button">Вернуться к списку новостей</a><br>
+<br>
+    <h4>Комментарии:</h4>
+    {% for comment in comments %}<br>
+        Пользователь - {{ comment.user }} <br>
+        {{ comment.body }}<br>
+        Добавлен - {{ comment.created }}<br>
+    {% endfor %}
+    {% if user.is_active %}
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Send</button>
+        </form>
+    {% else %}
+        <h4>Для коментария требуется регистрация</h4>
+        <a class="btn btn-lg btn-primary" href="/accounts/login/" role="button">Войти</a>
+    <br>
+    <br>
+        <a class="btn btn-lg btn-primary" href="/accounts/signup/" role="button">Регистрация</a><br>
+    {% endif %}
 {% endblock %}
-

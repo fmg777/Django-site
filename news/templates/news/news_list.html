@@ -4,11 +4,12 @@
 <br>
 <br>
 <br>
-{% for new in news %}
+  {% for contact in contacts %}
 <div class="jumbotron">
-        <h1>{{ new.title }}</h1>
-        <p class="lead">{{ new.date}}</p>
-        <a class="btn btn-lg btn-primary" href="{% url 'new_single' pk=new.id  %}" role="button">Перейти к статье</a>
+        <h1>{{ contact.title }}</h1>
+        <p class="lead">{{ contact.date}}</p>
+        <a class="btn btn-lg btn-primary" href="{% url 'new_single' pk=contact.id  %}" role="button">Перейти к статье</a>
 </div>
 {% endfor %}
+        {% include 'news/pagination.html' %}
 {% endblock %}
