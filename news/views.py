@@ -18,7 +18,7 @@ def news_list (request):
 """ 1 new   """
 def new_single (request, pk):
     new = get_object_or_404(Novosti, id=pk)
-    comment = Comment.objects.filter(id=pk)
+    comment = Comment.objects.filter(pk=new)
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
